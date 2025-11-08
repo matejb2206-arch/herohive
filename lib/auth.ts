@@ -1,6 +1,7 @@
+import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -14,6 +15,7 @@ export const authOptions = {
           name: "Demo User",
           email: credentials?.email,
         };
+
         if (credentials?.password === "demo123") {
           return user;
         }
@@ -25,7 +27,7 @@ export const authOptions = {
     signIn: "/auth/signin",
   },
   session: {
-    strategy: "jwt",
+    strategy: "jwt" as const, // ✅ Fix typing issue
     maxAge: 30 * 60, // 30 minutes
   },
   jwt: {

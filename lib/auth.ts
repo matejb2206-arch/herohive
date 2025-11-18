@@ -1,3 +1,4 @@
+import type { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const disallowedDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "icloud.com"];
@@ -11,7 +12,7 @@ const isBusinessEmail = (email?: string | null) => {
   return !disallowedDomains.includes(domain) && domain.includes(".");
 };
 
-export const authOptions = {
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -43,13 +44,13 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.company = (user as any).company;
+        (token as any).company = (user as any).company;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.company = (token as any).company;
+        (session.user as any).company = (token as any).company;
       }
       return session;
     },
@@ -62,4 +63,4 @@ export const authOptions = {
     maxAge: 30 * 60,
   },
   secret: process.env.NEXTAUTH_SECRET,
-} as const;
+};

@@ -77,7 +77,7 @@ export default function GetStartedPage() {
 
         <p className="text-sm text-gray-500">
           Already have an account?{" "}
-          <Link href="#" className="text-amber-400 hover:underline">
+           <Link href="/auth/signin" className="text-amber-400 hover:underline">
             Sign in
           </Link>
         </p>

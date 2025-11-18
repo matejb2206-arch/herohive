@@ -9,15 +9,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Navbar } from "@/components/navbar";
 
-const disallowedDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "icloud.com"];
-
-const isBusinessEmail = (email: string) => {
-  const pattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-  if (!pattern.test(email)) return false;
-  const domain = email.split("@")[1]?.toLowerCase();
-  if (!domain) return false;
-  return !disallowedDomains.includes(domain) && domain.includes(".");
-};
+const isValidEmail = (email: string) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
 
 export default function GetStartedPage() {
   const router = useRouter();
@@ -36,8 +28,8 @@ export default function GetStartedPage() {
 
   const validate = () => {
     const nextErrors: string[] = [];
-    if (!isBusinessEmail(form.email)) {
-      nextErrors.push("Use a valid work email (no personal domains).");
+    if (!isValidEmail(form.email)) {
+      nextErrors.push("Use a valid email address.");
     }
     if (!isPasswordStrong) {
       nextErrors.push("Password must be at least 8 characters.");
@@ -105,7 +97,7 @@ export default function GetStartedPage() {
             <Input
               name="email"
               type="email"
-              placeholder="Work Email"
+              placeholder="Email"
               required
               value={form.email}
               onChange={handleChange}

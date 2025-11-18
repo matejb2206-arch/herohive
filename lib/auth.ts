@@ -1,14 +1,9 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const disallowedDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "icloud.com"];
-
-const isBusinessEmail = (email?: string | null) => {
+const isValidEmail = (email?: string | null) => {
   if (!email) return false;
   const pattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-  if (!pattern.test(email)) return false;
-  const domain = email.split("@")[1]?.toLowerCase();
-  if (!domain) return false;
-  return !disallowedDomains.includes(domain) && domain.includes(".");
+  return pattern.test(email);
 };
 
 export const authOptions = {
@@ -25,7 +20,7 @@ export const authOptions = {
         const password = credentials?.password || "";
         const company = credentials?.company?.trim() || "Your company";
 
-        if (!isBusinessEmail(email)) return null;
+        if (!isValidEmail(email)) return null;
         if (password.length < 8) return null;
 
         return {

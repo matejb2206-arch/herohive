@@ -4,8 +4,15 @@ import { authOptions } from "@/lib/auth";
 import Link from "next/link";
 import { Navbar } from "@/components/navbar";
 
+type SessionWithUser = {
+  user?: {
+    email?: string | null;
+    company?: string | null;
+  };
+};
+
 export default async function DemoPage() {
-  const session = await getServerSession(authOptions);
+  const session = (await getServerSession(authOptions)) as SessionWithUser | null;
 
   if (!session || !session.user) {
     redirect("/auth/signin");

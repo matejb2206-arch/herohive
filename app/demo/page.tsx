@@ -1,18 +1,19 @@
 import { getServerSession } from "next-auth/next";
+import type { Session } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import Link from "next/link";
 import { Navbar } from "@/components/navbar";
 
 export default async function DemoPage() {
-  const session = await getServerSession(authOptions);
+  const session = (await getServerSession(authOptions)) as Session | null;
 
-  if (!session) {
+  if (!session || !session.user) {
     redirect("/auth/signin");
   }
 
-  const company = session.user?.company || "Your company";
-  const email = session.user?.email || "Demo User";
+  const company = session.user.company || "Your company";
+  const email = session.user.email || "Demo User";
 
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col">

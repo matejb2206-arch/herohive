@@ -12,9 +12,7 @@ const isBusinessEmail = (email?: string | null) => {
   return !disallowedDomains.includes(domain) && domain.includes(".");
 };
 
-type AuthConfig = Extract<Parameters<typeof NextAuth>[0], { providers: unknown[] }>;
-
-export const authOptions: AuthConfig = {
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -65,4 +63,4 @@ export const authOptions: AuthConfig = {
     maxAge: 30 * 60,
   },
   secret: process.env.NEXTAUTH_SECRET,
-};
+} satisfies Parameters<typeof NextAuth>[0];

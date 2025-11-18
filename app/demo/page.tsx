@@ -12,7 +12,7 @@ type SessionWithUser = {
 };
 
 export default async function DemoPage() {
-  const session = (await getServerSession(authOptions)) as SessionWithUser | null;
+  const session = (await getServerSession(authOptions as any)) as SessionWithUser | null;
 
   if (!session || !session.user) {
     redirect("/auth/signin");

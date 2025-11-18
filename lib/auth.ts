@@ -1,4 +1,3 @@
-import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const disallowedDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "icloud.com"];
@@ -63,4 +62,4 @@ export const authOptions = {
     maxAge: 30 * 60,
   },
   secret: process.env.NEXTAUTH_SECRET,
-} satisfies Parameters<typeof NextAuth>[0];
+} as const;

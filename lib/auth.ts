@@ -12,7 +12,7 @@ const isBusinessEmail = (email?: string | null) => {
   return !disallowedDomains.includes(domain) && domain.includes(".");
 };
 
-type AuthConfig = Parameters<typeof NextAuth>[0];
+type AuthConfig = Extract<Parameters<typeof NextAuth>[0], { providers: unknown[] }>;
 
 export const authOptions: AuthConfig = {
   providers: [

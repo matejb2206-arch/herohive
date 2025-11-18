@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Navbar } from "@/components/navbar";
 
 export default async function DemoPage() {
-  const session = (await getServerSession(authOptions)) as Session | null;
+  const session = (await getServerSession(authOptions as any)) as Session | null;
 
   if (!session || !session.user) {
     redirect("/auth/signin");

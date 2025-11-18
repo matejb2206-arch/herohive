@@ -1,4 +1,4 @@
-import type { AuthOptions } from "next-auth";
+import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const disallowedDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "icloud.com"];
@@ -12,7 +12,7 @@ const isBusinessEmail = (email?: string | null) => {
   return !disallowedDomains.includes(domain) && domain.includes(".");
 };
 
-export const authOptions: AuthOptions = {
+export const authOptions: Parameters<typeof NextAuth>[0] = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
